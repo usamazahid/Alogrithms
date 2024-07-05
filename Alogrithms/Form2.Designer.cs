@@ -51,7 +51,7 @@
             this.btnLinearSearch.Name = "btnLinearSearch";
             this.btnLinearSearch.Size = new System.Drawing.Size(125, 38);
             this.btnLinearSearch.TabIndex = 1;
-            this.btnLinearSearch.Text = "Linear Search";
+            this.btnLinearSearch.Text = "Search";
             this.btnLinearSearch.UseVisualStyleBackColor = true;
             this.btnLinearSearch.Click += new System.EventHandler(this.btnLinearSearch_Click);
             // 
