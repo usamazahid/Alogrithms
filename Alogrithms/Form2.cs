@@ -59,7 +59,7 @@ namespace Alogrithms
             {
                 Title = "Steps",
                 Labels = new[] { "Step 1", "Step 2", "Step 3", "Step 4", "Step 5", "Step 6", "Step 7", "Step 8", "Step 9", "Step 10",
-                    "Step 11", "Step 12", "Step 13", "Step 14", "Step 15", "Step 16", "Step 17", "Step 18", "Step 19", "Step 20" } // Customize labels as needed
+                    "Step 11", "Step 12", "Step 13", "Step 14", "Step 15", "Step 16", "Step 17", "Step 18", "Step 19", "Step 20" } 
             });
 
             cartesianChart1.AxisY.Add(new Axis
@@ -76,96 +76,6 @@ namespace Alogrithms
             LinearSearch(array, target);
             BinarySearch(array, target);
             JumpSearch(array, target);
-        }
-
-        private async void PerformLinearSearch()
-        {
-            linearTimes.Clear();
-
-            
-            int[] array = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100 }; 
-            int target = 90;
-            int steps = array.Length;
-
-            for (int i = 0; i < steps; i++)
-            {
-
-                linearTimes.Add(i + 1); 
-              
-
-                if (array[i] == target)
-                {
-                    break;
-                }
-                await System.Threading.Tasks.Task.Delay(100); 
-            }
-
-
-            int left = 0;
-            int j = 0;
-            int right = array.Length - 1;
-
-            while (left <= right)
-            {
-                j++;
-                BinaryTimes.Add(j + 1);
-                int mid = left + (right - left) / 2;
-
-                // Check if target is present at mid
-                if (array[mid] == target)
-                {
-                    break;
-                }
-
-                // If target greater, ignore left half
-                if (array[mid] < target)
-                {
-                    left = mid + 1;
-                }
-                // If target is smaller, ignore right half
-                else
-                {
-                    right = mid - 1;
-                }
-
-
-            }
-
-            int n = array.Length;
-            int step = (int)Math.Floor(Math.Sqrt(n));
-            int prev = 0;
-
-            // Jumping forward in array by step
-            while (array[Math.Min(step, n) - 1] < target)
-            {
-                JumpTimes.Add(Math.Min(step, n) - 1); // Record each jump step
-                prev = step;
-                step += (int)Math.Floor(Math.Sqrt(n));
-                if (prev >= n)
-                {
-                    //return -1; // If element is not present in the array
-                }
-            }
-
-            // Linear search for target in the current block
-            while (array[prev] < target)
-            {
-                prev++;
-                JumpTimes.Add(prev); // Record each step in linear search after jumping
-                if (prev == Math.Min(step, n))
-                {
-                    //return -1; // If element is not present in the array
-                }
-            }
-
-            // If target found
-            if (array[prev] == target)
-            {
-                //return prev;
-            }
-
-            //return -1;
-
         }
 
         private async void LinearSearch(int[] arr, int target)
