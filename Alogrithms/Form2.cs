@@ -12,12 +12,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace Alogrithms
 {
     public partial class Form2 : Form
     {
         private int[] array;
+        private int target, From, To, numOfElements;
         private ChartValues<int> values;
         private LineSeries lineSeries;
         private readonly ChartValues<double> linearTimes, BinaryTimes, JumpTimes;
@@ -57,9 +59,7 @@ namespace Alogrithms
 
             cartesianChart1.AxisX.Add(new Axis
             {
-                Title = "Steps",
-                Labels = new[] { "Step 1", "Step 2", "Step 3", "Step 4", "Step 5", "Step 6", "Step 7", "Step 8", "Step 9", "Step 10",
-                    "Step 11", "Step 12", "Step 13", "Step 14", "Step 15", "Step 16", "Step 17", "Step 18", "Step 19", "Step 20" } 
+                Title = "Steps"
             });
 
             cartesianChart1.AxisY.Add(new Axis
@@ -68,19 +68,64 @@ namespace Alogrithms
             });
         }
 
+        public bool resetArray()
+        {
+            linearTimes.Clear();
+            BinaryTimes.Clear();
+            JumpTimes.Clear();
+
+
+
+            target = Convert.ToInt16(numTarget.Value);
+            From = Convert.ToInt16(numFrom.Value);
+            To = Convert.ToInt16(numTo.Value);
+            if (To < From || target >= To || target <= From)
+            {
+                MessageBox.Show("Invalid Search Criteria");
+                return false;
+            }
+            numOfElements = To - From + 1;
+            array = new int[numOfElements];
+
+
+            for (int i = 0; i < numOfElements; i++)
+            {
+                array[i] = From + i;
+            }
+
+            return true;
+
+        }
+
         private void btnLinearSearch_Click(object sender, EventArgs e)
         {
-            int[] array = { 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70, 75, 80, 85, 90, 95, 100 };
-            int target = 100;
-
+            resetArray();
             LinearSearch(array, target);
             BinarySearch(array, target);
             JumpSearch(array, target);
         }
 
+        private void btnBinary_Click(object sender, EventArgs e)
+        {
+            if (resetArray())
+            BinarySearch(array, target);
+        }
+
+        private void btnJump_Click(object sender, EventArgs e)
+        {
+            if (resetArray())
+                JumpSearch(array, target);
+        }
+
+        private void btnLinear_Click(object sender, EventArgs e)
+        {
+            if (resetArray())
+                LinearSearch(array, target);
+        }
+
+
         private async void LinearSearch(int[] arr, int target)
         {
-            linearTimes.Clear();
             for (int i = 0; i < arr.Length; i++)
             {
                 linearTimes.Add(i + 1);
@@ -95,10 +140,9 @@ namespace Alogrithms
 
         private async void BinarySearch(int[] arr, int target)
         {
-            BinaryTimes.Clear();
             await Task.Delay(1000);
 
-            int i=0, left = 0, right = arr.Length - 1;
+            int i=0, left = From, right = arr.Length - 1;
             while (left <= right)
             {
                 i++;
@@ -121,8 +165,7 @@ namespace Alogrithms
 
         private async void JumpSearch(int[] arr, int target)
         {
-            JumpTimes.Clear();
-            await Task.Delay(3000);
+            await Task.Delay(1000);
 
             int j =0, n = arr.Length;
             int step = (int)Math.Floor(Math.Sqrt(n));
